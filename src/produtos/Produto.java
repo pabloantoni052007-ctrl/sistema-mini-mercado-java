@@ -1,3 +1,5 @@
+package produtos;
+
 public class Produto {
     private final int id;
     private String nome;
