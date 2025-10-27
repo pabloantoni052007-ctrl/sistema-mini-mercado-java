@@ -10,8 +10,6 @@ import clientes.ClientePessoaJuridica;
 import clientes.Categoria;
 import produtos.Produto;
 
-
-
 public class Main {
     private static ClienteService clienteService = new ClienteService();
     private static ProdutoService produtoService = new ProdutoService();
@@ -90,6 +88,12 @@ public class Main {
             System.out.print("Quantidade: ");
             int quantidade = scanner.nextInt();
             scanner.nextLine();
+
+            if (quantidade <= 0) {
+                System.out.println("Erro: a quantidade deve ser maior que zero.");
+                continue; // volta para o próximo loop sem adicionar o item
+            }
+
 
             Produto produto = produtoService.buscarPorId(produtoId);
 
