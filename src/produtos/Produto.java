@@ -1,21 +1,29 @@
 package produtos;
 
 public class Produto {
-    private final int id;
+    private int id;
     private String nome;
-    private String codigoBarras;
+    private double codigoBarras;
     private double preco;
     private double custoMedio;
     private int estoque;
 
-    public Produto(int id, String nome, double preco, String codigoBarras, double custoMedio, int estoque) {
+    public Produto(int id, String nome, double codigoBarras, double preco, double custoMedio, int estoque) {
         this.id = id;
         this.nome = nome;
-        this.preco = preco;
         this.codigoBarras = codigoBarras;
+        this.preco = preco;
         this.custoMedio = custoMedio;
         this.estoque = estoque;
     }
+
+    public Produto(int id, String nome, double preco, int estoque) {
+        this.id = id;
+        this.nome = nome;
+        this.preco = preco;
+        this.estoque = estoque;
+    }
+
 
     public int getId() {
         return id;
@@ -25,7 +33,7 @@ public class Produto {
         return nome;
     }
 
-    public String getCodigoBarras() {
+    public double getCodigoBarras() {
         return codigoBarras;
     }
 
@@ -45,7 +53,7 @@ public class Produto {
         this.nome = nome;
     }
 
-    public void setCodigoBarras(String codigoBarras) {
+    public void setCodigoBarras(double codigoBarras) {
         this.codigoBarras = codigoBarras;
     }
 

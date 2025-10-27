@@ -1,10 +1,10 @@
 package clientes;
 
 public enum Categoria {
-    BRONZE(0.02),
-    PRATA(0.05),
-    OURO(0.10),
-    PLATINA(0.15);
+    BRONZE(0.00),
+    PRATA(0.02),
+    OURO(0.05),
+    DIAMANTE(0.10); // nome padronizado
 
     private final double percentualDesconto;
 

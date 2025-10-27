@@ -1,5 +1,4 @@
 import clientes.Cliente;
-
 import java.time.LocalDateTime;
 
 public class Venda {
@@ -9,7 +8,8 @@ public class Venda {
     private ItensVenda[] itens;
     private double desconto;
 
-    public Venda(int id, LocalDateTime dataHora, Cliente cliente, ItensVenda[] itens, double desconto) {
+
+    public Venda(int id, LocalDateTime dataHora, Cliente cliente, ItensVenda[] itens) {
         this.id = id;
         this.dataHora = dataHora;
         this.cliente = cliente;
@@ -58,6 +58,7 @@ public class Venda {
         for (ItensVenda item : this.itens) {
             subtotalVenda += item.getSubTotal();
         }
-        return subtotalVenda;
+        double valorDescontoFidelidade = DescontoFidelidade.calcular(this.cliente, subtotalVenda);
+        return subtotalVenda - valorDescontoFidelidade - this.desconto;
     }
 }
