@@ -2,12 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDateTime;
-
-
-// Importações dos pacotes (ajustar conforme sua estrutura)
 import clientes.ClienteService;
 import produtos.ProdutoService;
-
 import clientes.Cliente;
 import clientes.ClientePessoaFisica;
 import clientes.ClientePessoaJuridica;
@@ -17,19 +13,12 @@ import produtos.Produto;
 
 
 public class Main {
-
-    // Instâncias dos Services (Injeção de Dependência Manual)
     private static ClienteService clienteService = new ClienteService();
     private static ProdutoService produtoService = new ProdutoService();
-    // VendaService depende dos outros dois services
     private static VendaService vendaService = new VendaService(produtoService, clienteService);
-
-    // Scanner para leitura de entrada
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-        // Inicialização de Dados (Para Teste)
         inicializarDados();
 
         int opcao = -1;
@@ -37,7 +26,7 @@ public class Main {
             exibirMenuPrincipal();
             if (scanner.hasNextInt()) {
                 opcao = scanner.nextInt();
-                scanner.nextLine(); // Consumir a nova linha
+                scanner.nextLine();
 
                 try {
                     switch (opcao) {
@@ -48,7 +37,7 @@ public class Main {
                         case 5: listarVendas(); break;
                         case 6: listarClientes(); break;
                         case 7: consultarEstoque(); break;
-                        case 8: promoverCategoriaCliente(); break; // ✅ NOVO
+                        case 8: promoverCategoriaCliente(); break;
                         case 0: System.out.println("Sistema encerrado."); break;
                         default: System.out.println("Opção inválida. Tente novamente.");
                     }
@@ -60,7 +49,7 @@ public class Main {
                 scanner.nextLine();
             }
         }
-        scanner.close(); // Fechar o scanner ao sair do programa
+        scanner.close();
     }
 
     private static void exibirMenuPrincipal() {
@@ -77,12 +66,10 @@ public class Main {
         System.out.print("Escolha uma opção: ");
     }
 
-    // --- MÉTODOS DE OPERAÇÃO ---
 
     private static void realizarVenda() {
         System.out.println("\n--- REALIZAR VENDA ---");
 
-        // 1. Coleta o Cliente
         System.out.print("ID do Cliente: ");
         int clienteId = scanner.nextInt();
         scanner.nextLine();
@@ -96,7 +83,6 @@ public class Main {
         List<ItensVenda> itensVenda = new ArrayList<>();
         int itemId = 1;
 
-        // 2. Coleta os Itens
         String continuar = "S";
         while (continuar.equalsIgnoreCase("S")) {
             System.out.print("ID do Produto: ");
@@ -108,11 +94,9 @@ public class Main {
             Produto produto = produtoService.buscarPorId(produtoId);
 
             if (produto != null) {
-                // Instancia o ItemVenda.
-                // NOTE: A classe ItensVenda precisa receber ID, NOME, QUANTIDADE E PREÇO
                 ItensVenda item = new ItensVenda(
-                        itemId++,              // ID do item da venda (sequencial)
-                        produto.getId(),       // ✅ ID do produto real
+                        itemId++,
+                        produto.getId(),
                         produto.getNome(),
                         quantidade,
                         produto.getPreco()
@@ -131,15 +115,13 @@ public class Main {
             return;
         }
 
-
-        // NOTE: A classe Venda precisa de um gerador de ID. Aqui, usamos um ID simples.
         int proximaVendaId = vendaService.listarTodas().size() + 1;
 
         Venda novaVenda = new Venda(
                 proximaVendaId,
                 LocalDateTime.now(),
                 cliente,
-                itensVenda.toArray(new ItensVenda[0]) // Converte a lista para o array exigido
+                itensVenda.toArray(new ItensVenda[0])
         );
 
         vendaService.finalizarVenda(novaVenda);
@@ -157,7 +139,6 @@ public class Main {
         System.out.print("CPF: ");
         String cpf = scanner.nextLine();
 
-        // Todo novo cliente começa como BRONZE
         Cliente novoCliente = new ClientePessoaFisica(id, nome, telefone, Categoria.BRONZE, cpf);
 
         clienteService.cadastrar(novoCliente);
@@ -176,7 +157,6 @@ public class Main {
         System.out.print("CNPJ: ");
         String cnpj = scanner.nextLine();
 
-        // Todo novo cliente PJ também começa como BRONZE
         Cliente novoCliente = new ClientePessoaJuridica(id, nome, telefone, Categoria.BRONZE, cnpj);
 
         clienteService.cadastrar(novoCliente);
@@ -197,7 +177,6 @@ public class Main {
         int estoque = scanner.nextInt();
         scanner.nextLine();
 
-        // NOTE: A classe Produto precisa ter os atributos necessários
         Produto novoProduto = new Produto(id, nome, preco, estoque);
 
         produtoService.cadastrar(novoProduto);
@@ -272,7 +251,7 @@ public class Main {
         scanner.nextLine();
 
         try {
-            clienteService.promoverCategoria(id); // chama o método do service
+            clienteService.promoverCategoria(id);
         } catch (Exception e) {
             System.out.println("Erro ao promover cliente: " + e.getMessage());
         }
@@ -280,7 +259,6 @@ public class Main {
 
 
     private static void inicializarDados() {
-        // Inicializa o sistema com alguns dados para facilitar o teste
         try {
             // Clientes
             clienteService.cadastrar(new ClientePessoaFisica(1, "Ana Silva", "98888-1111", Categoria.PRATA, "111.111.111-11"));

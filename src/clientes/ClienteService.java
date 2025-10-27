@@ -1,31 +1,22 @@
-package clientes; // Assumindo o pacote 'clientes'
-
+package clientes;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ClienteService {
-
-
     private static final List<Cliente> clientes = new ArrayList<>();
 
     public void cadastrar(Cliente cliente) {
-
-        // Validação 1: O nome não pode ser nulo ou vazio.
         if (cliente.getNome() == null || cliente.getNome().trim().isEmpty()) {
             throw new IllegalArgumentException("O nome do cliente é obrigatório.");
         }
 
-        // Validação 2: Verificar se o ID já existe
         if (buscarPorId(cliente.getId()) != null) {
             throw new IllegalArgumentException("Cliente com ID " + cliente.getId() + " já está cadastrado.");
         }
 
-        // Validação 3: Lógica específica para Pessoa Física (Ex: Validação de CPF)
         if (cliente instanceof ClientePessoaFisica) {
             ClientePessoaFisica cpf = (ClientePessoaFisica) cliente;
-            // Assumindo que ClientePessoaFisica tem um método getCpf()
-            // if (!validaCPF(cpf.getCpf())) { ... lançar exceção ... }
         }
         cliente.setCategoria((Categoria.BRONZE));
         clientes.add(cliente);
@@ -71,7 +62,6 @@ public class ClienteService {
                 break;
         }
 
-        // Agora usa a variável 'nova' corretamente
         cliente.setCategoria(nova);
         System.out.println("Cliente " + cliente.getNome() + " promovido para " + nova);
     }

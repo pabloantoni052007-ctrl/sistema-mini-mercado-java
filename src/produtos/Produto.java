@@ -8,14 +8,6 @@ public class Produto {
     private double custoMedio;
     private int estoque;
 
-    public Produto(int id, String nome, double codigoBarras, double preco, double custoMedio, int estoque) {
-        this.id = id;
-        this.nome = nome;
-        this.codigoBarras = codigoBarras;
-        this.preco = preco;
-        this.custoMedio = custoMedio;
-        this.estoque = estoque;
-    }
 
     public Produto(int id, String nome, double preco, int estoque) {
         this.id = id;

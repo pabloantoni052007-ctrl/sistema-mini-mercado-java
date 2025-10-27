@@ -1,6 +1,6 @@
 public class ItensVenda {
-    private int id;            // ID do item na venda
-    private int produtoId;     // ID do produto real
+    private int id;
+    private int produtoId;
     private String nomeProduto;
     private int quantidade;
     private double preco;
