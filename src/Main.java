@@ -36,6 +36,8 @@ public class Main {
                         case 6: listarClientes(); break;
                         case 7: consultarEstoque(); break;
                         case 8: promoverCategoriaCliente(); break;
+                        case 9: editarProduto(); break;
+                        case 10: editarCliente(); break;
                         case 0: System.out.println("Sistema encerrado."); break;
                         default: System.out.println("Opção inválida. Tente novamente.");
                     }
@@ -60,6 +62,8 @@ public class Main {
         System.out.println("6. Listar Clientes");
         System.out.println("7. Consultar Estoque");
         System.out.println("8. Promover Categoria de Cliente");
+        System.out.println("9. Editar Produto");
+        System.out.println("10. Editar Cliente");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -260,6 +264,83 @@ public class Main {
             System.out.println("Erro ao promover cliente: " + e.getMessage());
         }
     }
+
+    // ✅ NOVO MÉTODO - Edição de Produto
+    private static void editarProduto() {
+        System.out.println("\n--- EDITAR PRODUTO ---");
+        System.out.print("Informe o ID do produto que deseja editar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Produto produto = produtoService.buscarPorId(id);
+
+        if (produto == null) {
+            System.out.println("❌ Produto não encontrado.");
+            return;
+        }
+
+        System.out.println("Produto atual:");
+        System.out.println("Nome: " + produto.getNome());
+        System.out.println("Preço: R$ " + produto.getPreco());
+        System.out.println("Estoque: " + produto.getEstoque());
+
+        System.out.print("\nNovo nome (ou Enter para manter): ");
+        String nomeNovo = scanner.nextLine();
+        if (!nomeNovo.trim().isEmpty()) {
+            produto.setNome(nomeNovo);
+        }
+
+        System.out.print("Novo preço (ou -1 para manter): ");
+        double precoNovo = scanner.nextDouble();
+        scanner.nextLine();
+        if (precoNovo >= 0) {
+            produto.setPreco(precoNovo);
+        }
+
+        System.out.print("Novo estoque (ou -1 para manter): ");
+        int estoqueNovo = scanner.nextInt();
+        scanner.nextLine();
+        if (estoqueNovo >= 0) {
+            produto.setEstoque(estoqueNovo);
+        }
+
+        System.out.println("✅ Produto atualizado com sucesso!");
+    }
+
+    // ✅ NOVO MÉTODO - Edição de Cliente
+    private static void editarCliente() {
+        System.out.println("\n--- EDITAR CLIENTE ---");
+        System.out.print("Informe o ID do cliente que deseja editar: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        Cliente cliente = clienteService.buscarPorId(id);
+
+        if (cliente == null) {
+            System.out.println("❌ Cliente não encontrado.");
+            return;
+        }
+
+        System.out.println("Cliente atual:");
+        System.out.println("Nome: " + cliente.getNome());
+        System.out.println("Telefone: " + cliente.getTelefone());
+        System.out.println("Categoria: " + cliente.getCategoria());
+
+        System.out.print("\nNovo nome (ou Enter para manter): ");
+        String novoNome = scanner.nextLine();
+        if (!novoNome.trim().isEmpty()) {
+            cliente.setNome(novoNome);
+        }
+
+        System.out.print("Novo telefone (ou Enter para manter): ");
+        String novoTel = scanner.nextLine();
+        if (!novoTel.trim().isEmpty()) {
+            cliente.setTelefone(novoTel);
+        }
+
+        System.out.println("✅ Cliente atualizado com sucesso!");
+    }
+
 
 
     private static void inicializarDados() {

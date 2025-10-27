@@ -49,15 +49,19 @@ public class Produto {
         this.codigoBarras = codigoBarras;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
 
     public void setCustoMedio(double custoMedio) {
         this.custoMedio = custoMedio;
     }
 
+    public void setPreco(double preco) {
+        if (preco < 0) throw new IllegalArgumentException("Preço não pode ser negativo");
+        this.preco = preco;
+    }
+
     public void setEstoque(int estoque) {
+        if (estoque < 0) throw new IllegalArgumentException("Estoque não pode ser negativo");
         this.estoque = estoque;
     }
+
 }
